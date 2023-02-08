@@ -58,9 +58,6 @@ RUN apt-get update \
     && echo 'kasm-user ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
     && rm -rf /var/lib/apt/list/*
 
-ENV HOME /home/kasm-default-profile
-WORKDIR $HOME
-
 ######### End Customizations ###########
 
 RUN chown 1000:0 $HOME
