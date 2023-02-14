@@ -48,9 +48,19 @@ RUN bash $INST_SCRIPTS/vs_code/install_vs_code.sh  && rm -rf $INST_SCRIPTS/vs_co
 COPY ./src/ubuntu/install/chrome $INST_SCRIPTS/chrome/
 RUN bash $INST_SCRIPTS/chrome/install_chrome.sh  && rm -rf $INST_SCRIPTS/chrome/
 
+### PYENV should be the first thing installed so that all other software uses its python version ###
 # Install pyenv, pipenv, pipx
 COPY ./src/ubuntu/install/python $INST_SCRIPTS/python/
 RUN bash $INST_SCRIPTS/python/install_pystuff.sh  && rm -rf $INST_SCRIPTS/python/
+
+# Install gdal
+COPY ./src/ubuntu/install/gdal $INST_SCRIPTS/gdal/
+RUN bash $INST_SCRIPTS/gdal/install_gdal.sh  && rm -rf $INST_SCRIPTS/gdal/
+
+# Install QGIS
+COPY ./src/ubuntu/install/qgis $INST_SCRIPTS/qgis/
+COPY ./src/ubuntu/install/qgis/qgis_focal.sources /etc/apt/sources.list.d/qgis.sources
+RUN bash $INST_SCRIPTS/gdal/install_qgis.sh  && rm -rf $INST_SCRIPTS/qgis/
 
 # building workspace with sudo
 RUN apt-get update \
